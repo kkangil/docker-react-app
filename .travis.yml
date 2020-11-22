@@ -7,7 +7,7 @@ services:
 
 before_install:
   - echo "start creating an image with dockerfile"
-  - docker build -t kkangil/docker-react-app -f Dockerfile.dev .
+  - docker build -t kkangil/docker-react-app
 
 script:
   - docker run -e CI=true kkangil/docker-react-app npm run test -- --coverage

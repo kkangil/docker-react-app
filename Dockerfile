@@ -15,6 +15,9 @@ RUN npm run build
 
 FROM nginx
 
+# nginx port mapping 을 해주지 않으면 EB 에러 발생
+EXPOSE 80
+
 COPY --from=builder /usr/src/app/build /usr/share/nginx/html
 
 # --from=builder: 다른 Stage 에 있는 파일을 복사할때 다룬 Stage 이름을 명시
