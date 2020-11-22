@@ -2,24 +2,17 @@
 
 # 해당 FROM 부터 다음 FROM 까지 builder stage 부분이라는 것을 명시
 FROM node:alpine as builder
-
 WORKDIR /usr/src/app
-
-COPY package.json ./
-
+COPY package.json .
 RUN npm install
-
 COPY ./ ./
-
 RUN npm run build
 
 FROM nginx
-
-# nginx port mapping 을 해주지 않으면 EB 에러 발생
 EXPOSE 80
-
 COPY --from=builder /usr/src/app/build /usr/share/nginx/html
 
+# nginx port mapping 을 해주지 않으면 EB 에러 발생
 # --from=builder: 다른 Stage 에 있는 파일을 복사할때 다룬 Stage 이름을 명시
 # /usr/src/app/build /usr/share/nginx/html : build stage 에서 생성된 파일들은 해당 폴더로 들어가게 되며 그곳에 저장된
 #                                           파일들을 /usr/share/nginx/html 로 복사를 시켜줘서 nginx 가 웹 브라우저의
