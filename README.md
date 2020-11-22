@@ -185,3 +185,27 @@ Github 에 소스를 push 하면 자동으로 테스트 및 배포를 할 수 �
 - before_install: 스크립트를 실행할 수 있는 환경 구성
 - script: 실행할 스크립트(테스트 실행)
 - after_success: 테스트 성공 후 할일
+
+### travis CI 에서 aws 에 배포하기
+
+테스트에 성공한 소스를 AWS Elastic Beanstalk 에 자동으로 배포하는 부분을 .travis.yml 에 추가해준다.
+
+배포 관련된 부분을 추가로 작성해야한다.
+- provider: 외부 서비스 표시 (s3, EB...)
+- region: 현재 사용하고 있는 AWS 의 서비스가 위치하고 있는 물리적 장소
+- app: 생성된 애플리케이션의 이름
+- env: 환경 이름(EB env)
+- bucket_name: 해당 elastic beanstalk 을 위한 s3 버켓 이름 -> travis CI 에서 가지고 있는 파일을 S3 에 먼저 보낸다.(EB 에
+전달되서 바로 실행되는 것이 아님.) -> EB 를 생성할 때 자동적으로 s3 도 생성된다.
+- bucket_path: 애플리케이션 이름과 동일
+- branch: 어떤 브랜치에 push 할때 배포할것 인지 지정.
+
+### aws 인증
+
+AWS 의 IAM 을 사용하여 travis 에서 AWS 접근할 때 인증을 진행해준다.
+
+처음 로그인할때 사용하는 계정을 Root 사용자로 Root 사용자를 직접 사용하여 인증하는 것은
+보안상 좋지않다. 이를 위해 IAM 사용자(root 사용자가 부여한 권한만 갖고있음.)를 생성해서 연결해준다.
+
+travis 의 레포지토리 설정에서 Environment Variables 에 IAM 액세스키와 비밀키를 넣어준다.
+.travis.yml 파일에 해당 키를 적어두면 탈취의 위험이 있어 안전한 곳에 숨겨 두어야 함.
