@@ -172,3 +172,16 @@ docker run -p 8080:80 kkangil/react-app
 ```
 
 Nginx 의 기본 포트가 80 이기 때문에 80 으로 맵핑해준다.
+
+## Travis CI
+
+Github 에 소스를 push 하면 자동으로 테스트 및 배포를 할 수 있게 도와줌.
+
+### travis.yml
+
+- sudo: 관리자 권한 갖기
+- language: 언어(플랫폼) 선택
+- services: 도커 환경 구성
+- before_install: 스크립트를 실행할 수 있는 환경 구성
+- script: 실행할 스크립트(테스트 실행)
+- after_success: 테스트 성공 후 할일
