@@ -94,7 +94,7 @@ docker-compose up
 ## Docker 에서 리액트 앱 테스트 하기
 
 ```shell script
-docker build -f dockerfile.dev .
+docker build -f Dockerfile.dev .
 docker run -it kkangil/react-app npm run test
 ```
 
